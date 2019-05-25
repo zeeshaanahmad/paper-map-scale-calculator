@@ -1,23 +1,42 @@
 Number.prototype.toRadians = function() { return this * Math.PI / 180; };
 Number.prototype.toDegrees = function() { return this * 180 / Math.PI; };
-
+var map;
+var bounds;
+var markers = [];
 // // 26.329481, 50.208709 - topLeft
-// var topLeftCorner = {"lat": 26.329481, "lon":50.208709}
-// // var topLeftCorner = {"lat": 26.329811, "lon":50.210336}
+// var topLeftCorner = {"lat": 26.329481, "lng":50.208709}
+// // var topLeftCorner = {"lat": 26.329811, "lng":50.210336}
 
 // // 26.328997, 50.210530 - currentPt
-// var currentPt = {"lat": 26.328997, "lon":50.210530}
+// var currentPt = {"lat": 26.328997, "lng":50.210530}
+
+function initMap() {
+    map = new google.maps.Map(
+    document.getElementById('map'), {zoom:7, center: {lat: 27.6648, lng: -81.5158}});
+    bounds  = new google.maps.LatLngBounds();
+}
 
 function handleClick() {
+    resetMap()
+
     var topLeftCorner = {
         "lat": Number(document.getElementById("inputTopLeftLat").value),
-        "lon": Number(document.getElementById("inputTopLeftLon").value)
+        "lng": Number(document.getElementById("inputTopLeftLon").value)
     }
+
+    addPointToMap(topLeftCorner)
 
     var currentPt = {
         "lat": Number(document.getElementById("inputLat").value),
-        "lon": Number(document.getElementById("inputLon").value)
+        "lng": Number(document.getElementById("inputLon").value)
     }
+
+    addPointToMap(currentPt)
+    
+    addPointToMap(getRightAnglePt(topLeftCorner, currentPt))
+
+    map.fitBounds(bounds);
+    map.panToBounds(bounds);
 
     var scale = Number(document.getElementById("inputScale").value)
 
@@ -39,7 +58,7 @@ function findDistanceComponents(topLeftCorner, currentPt, scale) {
 function getRightAnglePt(topLeftCorner, currentPt) {
 	var newPt = {
 		"lat": currentPt.lat,
-		"lon":topLeftCorner.lon
+		"lng":topLeftCorner.lng
 	}
 
 	return newPt;
@@ -50,7 +69,7 @@ function calculateDistance(point1, point2) {
 	var φ1 = point1.lat.toRadians();
 	var φ2 = point2.lat.toRadians();
 	var Δφ = (point2.lat-point1.lat).toRadians();
-	var Δλ = (point2.lon-point1.lon).toRadians();
+	var Δλ = (point2.lng-point1.lng).toRadians();
 
 	var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
 	        Math.cos(φ1) * Math.cos(φ2) *
@@ -132,6 +151,25 @@ function formatDistance(distance, unit) {
     return distance+' '+unitText;
 }
 
+function addPointToMap(point) {
+    var marker = new google.maps.Marker({position: point, map: map});
+    var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+    bounds.extend(loc);
+    markers.push(marker);
+}
+
+function removeMarkersFromMap() {
+    for (var idx = 0; idx < markers.length; idx++) {
+        markers[idx].setMap(null);
+    }
+}
+
+function resetMap() {
+    removeMarkersFromMap();
+    markers.length = 0;
+    bounds  = new google.maps.LatLngBounds();
+}
+
 // ******* UNUASED  **********
 
 // function calculateDestinationPointUsingDistanceAndAngle(startingPt, verticalDistance, horizontalDistance, radius=6371e5) {
@@ -163,7 +201,7 @@ function formatDistance(distance, unit) {
 // 	const δ = distance / radius; // angular distance in radians
 //     const θ = Number(angle).toRadians();
 
-//     const φ1 = startingPt["lat"].toRadians(), λ1 = startingPt["lon"].toRadians();
+//     const φ1 = startingPt["lat"].toRadians(), λ1 = startingPt["lng"].toRadians();
 
 //     const sinφ2 = Math.sin(φ1) * Math.cos(δ) + Math.cos(φ1) * Math.sin(δ) * Math.cos(θ);
 //     const φ2 = Math.asin(sinφ2);
@@ -174,6 +212,6 @@ function formatDistance(distance, unit) {
 //     const lat = φ2.toDegrees();
 //     const lon = λ2.toDegrees();
 
-//     return {"lat": lat, "lon":lon};
+//     return {"lat": lat, "lng":lon};
 // }
 

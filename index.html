@@ -1,24 +1,39 @@
 <html>
-    <head>
-        <title>Distance calculator</title>
-    </head>
-    <body>
-        <div>
-            <input id="inputTopLeftLat" type="text" placeholder="top left corner lat e.g. 48.858356" value="26.329481" /><br>
-            <input id="inputTopLeftLon" type="text" placeholder="top left corner lon e.g. 2.294492" value="50.208709"/><br>
-            <br>
-            <input id="inputLat" type="text" placeholder="lat e.g. 48.858356" value="26.328997" /><br>
-            <input id="inputLon" type="text" placeholder="lon e.g. 2.294492" value="50.210530" /><br>
-            <br>
-            1:<input id="inputScale" type="text" placeholder="scale" value="1000" /><br>
-            <br>
-            <input id="btnDist" type="button" onclick="handleClick()" value="Get Distances"></input>
-        </div>
-        <div>
-            <h2>Distance along Latitude</h2> <p id="latDist"></p>
-            <h2>Distance along Longitude</h2> <p id="lonDist"></p>
-        </div>
-        <script src="script.js"/>
+<head>
+    <title>Ground Point to Paper Map</title>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;  /* The height is 400 pixels */
+            width: 100%;  /* The width is the width of the web page */
+        }
+    </style>
+</head>
+<body>
+    <h1>Ground Point to Paper Map</h1>
+    <div>
+        <input id="inputTopLeftLat" type="text" placeholder="top left corner lat e.g. 48.858356" value="26.329481" /><br>
+        <input id="inputTopLeftLon" type="text" placeholder="top left corner lon e.g. 2.294492" value="50.208709"/><br>
+        <br>
+        <input id="inputLat" type="text" placeholder="lat e.g. 48.858356" value="26.328997" /><br>
+        <input id="inputLon" type="text" placeholder="lon e.g. 2.294492" value="50.210530" /><br>
+        <br>
+        1:<input id="inputScale" type="text" placeholder="scale" value="1000" /><br>
+        <br>
+        <input id="btnDist" type="button" onclick="handleClick()" value="Get Distances"></input>
+    </div>
+    <div>
+        <h2>Distance along Latitude</h2> <p id="latDist"></p>
+        <h2>Distance along Longitude</h2> <p id="lonDist"></p>
+    </div>
+    
+    <div id="map"></div>
 
-    </body>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZbVmCCBaVPm5r4n_FyL9MA3A9GKX7dsA&callback=initMap">
+</script>
+
+<script src="script.js"/>
+
+</body>
 </html>

@@ -3,7 +3,7 @@
 
 This small utility converts a point anywhere on the map to it's equivalent centimeter scaled down value for the paper maps using the scale provided.
 
-![img](http://www.giphy.com/gifs/RJE74gwOoKkyLXsISz)
+![img](https://media.giphy.com/media/RJE74gwOoKkyLXsISz/giphy.gif)
 
 ## Input
 

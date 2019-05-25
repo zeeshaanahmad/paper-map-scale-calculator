@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Distance calculator</title>
+    </head>
+    <body>
+        <div>
+            <input id="inputTopLeftLat" type="text" placeholder="top left corner lat e.g. 48.858356" /><br>
+            <input id="inputTopLeftLon" type="text" placeholder="top left corner lon e.g. 2.294492" /><br>
+            <br>
+            <input id="inputLat" type="text" placeholder="lat e.g. 48.858356" /><br>
+            <input id="inputLon" type="text" placeholder="lon e.g. 2.294492" /><br>
+            <br>
+            1:<input id="inputScale" type="text" placeholder="scale" /><br>
+            <br>
+            <input id="btnDist" type="button" onclick="handleClick">Get Distances</input>
+        </div>
+        <div>
+            <h2>Distance along Latitude</h2> <p id="latDist"></p>
+            <h2>Distance along Longitude</h2> <p id="lonDist"></p>
+        </div>
+        <script src="script.js"/>
+
+    </body>
+</html>

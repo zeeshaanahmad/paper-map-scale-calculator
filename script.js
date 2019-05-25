@@ -10,16 +10,16 @@ Number.prototype.toDegrees = function() { return this * 180 / Math.PI; };
 
 function handleClick() {
     var topLeftCorner = {
-        "lat": document.getElementById("inputTopLeftLat").value,
-        "lon": document.getElementById("inputTopLeftLon").value
+        "lat": Number(document.getElementById("inputTopLeftLat").value),
+        "lon": Number(document.getElementById("inputTopLeftLon").value)
     }
 
     var currentPt = {
-        "lat": document.getElementById("inputLat").value,
-        "lon": document.getElementById("inputLon").value
+        "lat": Number(document.getElementById("inputLat").value),
+        "lon": Number(document.getElementById("inputLon").value)
     }
 
-    var scale = document.getElementById("inputScale").value
+    var scale = Number(document.getElementById("inputScale").value)
 
     findDistanceComponents(topLeftCorner, currentPt, scale)
 }
@@ -30,7 +30,10 @@ function findDistanceComponents(topLeftCorner, currentPt, scale) {
 	var horizontalDist = calculateDistance(rightAnglePt, currentPt)
 
 	console.log("Vertical Distance", ground2Map(verticalDist, 'meter', scale, 'centimeter'))
-	console.log("Horizontal Distance", ground2Map(horizontalDist, 'meter', scale, 'centimeter'))
+    console.log("Horizontal Distance", ground2Map(horizontalDist, 'meter', scale, 'centimeter'))
+    
+    document.getElementById("latDist").innerHTML = ground2Map(verticalDist, 'meter', scale, 'centimeter')
+    document.getElementById("lonDist").innerHTML = ground2Map(horizontalDist, 'meter', scale, 'centimeter')
 }
 
 function getRightAnglePt(topLeftCorner, currentPt) {

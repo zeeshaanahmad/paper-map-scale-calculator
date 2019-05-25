@@ -24,16 +24,16 @@ function handleClick() {
         "lng": Number(document.getElementById("inputTopLeftLon").value)
     }
 
-    addPointToMap(topLeftCorner)
+    addPointToMap(topLeftCorner, "yellow", "top corner")
 
     var currentPt = {
         "lat": Number(document.getElementById("inputLat").value),
         "lng": Number(document.getElementById("inputLon").value)
     }
 
-    addPointToMap(currentPt)
+    addPointToMap(currentPt, "yellow", "point of interest")
     
-    addPointToMap(getRightAnglePt(topLeftCorner, currentPt))
+    addPointToMap(getRightAnglePt(topLeftCorner, currentPt), "green", "third point")
 
     map.fitBounds(bounds);
     map.panToBounds(bounds);
@@ -41,6 +41,19 @@ function handleClick() {
     var scale = Number(document.getElementById("inputScale").value)
 
     findDistanceComponents(topLeftCorner, currentPt, scale)
+}
+
+function addMarker(latLng, color) {
+    let url = "http://maps.google.com/mapfiles/ms/icons/";
+    url += color + "-dot.png";
+  
+    let marker = new google.maps.Marker({
+      map: map,
+      position: latLng,
+      icon: {
+        url: url
+      }
+    });
 }
 
 function findDistanceComponents(topLeftCorner, currentPt, scale) {
@@ -151,8 +164,19 @@ function formatDistance(distance, unit) {
     return distance+' '+unitText;
 }
 
-function addPointToMap(point) {
-    var marker = new google.maps.Marker({position: point, map: map});
+function addPointToMap(point, color, title) {
+    let url = "http://maps.google.com/mapfiles/ms/icons/";
+    url += color + "-dot.png";
+
+    let marker = new google.maps.Marker({
+        map: map,
+        position: point,
+        title: title,
+        icon: {
+            url: url
+        }
+    });
+
     var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
     bounds.extend(loc);
     markers.push(marker);

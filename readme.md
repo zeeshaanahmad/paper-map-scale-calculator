@@ -1,5 +1,5 @@
 
-# Ground Point to Paper Map
+# Paper Map Scale Calculator
 
 This small utility converts a point anywhere on the map to it's equivalent centimeter scaled down value for the paper maps using the scale provided.
 
